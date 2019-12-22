@@ -24,7 +24,8 @@
 * [6. Extended `grep`](#6-extended-grep)
 * [7. Tabular Data](#7-tabular-data)
 * [8. Bigger Data](#8-bigger-data)
-* [9. Next Steps](#9-next-steps)
+* [9. Experiment](#9-experiment)
+* [10. Next Steps](#10-next-steps)
 
 ### Supplemental
 
@@ -455,13 +456,26 @@ John              Party All the Time - Eddie Murphy.m4a  Funk       4:08    2008
 John              MOZART PIANO SONATA 11.M4A             Classical  14:31   2007-03-07
 ```
 
-**Under Construction: Please check back later!**
+* There's a lot more information here, but we only care about `owner`, `filename` and `genre`; let's cut those out to show by using the program `cut`
+* We are going to use the flag `-d ","` to denote we are splitting the columns by a comma and `-f1,2,3` to only get columns 1-4 (and not column 5)
 
+```
+$ cut -d "," -f1,2,3 * | column -t -s,
+```
+
+* John's having a party and we really want to play a pop music video (MP4 file) in the background, let's see what we have:
+
+```
+$ cut -d "," -f1,2,3 * | column -t -s, | grep "Pop" | grep -iE ".+\.mp4"
+```
+* Looks like Jane has a classic jam for John to borrow
 * Cool, now let's clear out all the files to work on different data in the next section:
 
 ```
-$ rm john.csv && rm jane.csv && rm results.csv
+$ rm john.csv && rm jane.csv
 ```
+
+**You're thinking that those files were so small we could've just manually looked at them.. true, but how about the data in the next section?**
 
 [Back to Top](#table-of-contents)
 
@@ -481,7 +495,7 @@ $ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/newsCorpor
 $ unzip newsCorpora.zip
 ```
 
-* This Tab Separated Values (TSV) file contains 423,812 records (plus top row header) of news articles and 8 attributes describing them
+* This tab separated values (TSV) file contains 423,812 records of news articles and eight columns of information describing them
 * We can double check how many lines of data a file has with `wc -l`
 
 ```
@@ -489,21 +503,69 @@ $ wc -l newsCorpora.tsv
 423813 newsCorpora.tsv
 ```
 
-* Since this is a really big file, we wouldn't want to use commands like `cat` to output everything to the console
+* 423,812? I see 423,813, are we missing a line?
+* Let's look at a small snapshot of the data with the program `head` and tidy up the display with `column` using the flag `-s $'\t'` to separate by tabs
+   * Since this is a really big file, we wouldn't want to use commands like `cat` to output everything to the console
    * **If you accidentally `cat`, type `CTRL+C` to cancel the current execution**
-* We should only use `head` or `tail` to only see a subset whenever we need to check results
-   * Remember that with all the fine tuning we had to do earlier to get the right results, not being able to see everything might cause us to miss a few things
- 
+
 ```
 $ head -2 newsCorpora.tsv | column -t -s $'\t'
 ID  TITLE                                                                 URL                                                                                                                          PUBLISHER          CATEGORY  STORY                          HOSTNAME         TIMESTAMP
 1   Fed official says weak data caused by weather, should not slow taper  http://www.latimes.com/business/money/la-fi-mo-federal-reserve-plosser-stimulus-economy-20140310,0,1312750.story\?track=rss  Los Angeles Times  b         ddUyU0VZz0BRneMioxUPQVP6sIxvM  www.latimes.com  1394470370698
 ```
 
-* Looks pretty dense, and there's 423,811 more records!
+* Ah, the top line is counted by `wc` but is the header row and isn't an actual record of data
+* This file looks pretty dense, and there's 423,811 more records!
+* Let's cut down this data to only the `TITLE` (column 2),  `PUBLISHER` (column 4), and `HOSTNAME` (column 7) and check that the output is correct
 
-**Under Construction: Please check back later!**
+```
+$ cut -f2,4,7  -d$'\t' newsCorpora.tsv | head -5 | column -t -s $'\t'
+```
 
+* Looks good so far, let's move these results into a new file called `newsCorpora2.tsv` and double check the contents
+
+```
+$ cut -f2,4,7  -d$'\t' newsCorpora.tsv > newsCorpora2.tsv && head -5 newsCorpora2.tsv | column -t -s $'\t'
+```
+
+* Curious, how many articles are from ".com" websites since I tend to associate that with more legitimate websites
+* Let's use the regex `$` symbol to denote that the term `.\.com` needs to occur right at the end of the line
+
+```
+$ grep -Eic ".\.com$" newsCorpora2.tsv
+348971
+```
+
+* Oh wow, so almost 75K articles not from a .com website, good to know!
+* Now I'm really curious what news outlets don't have a .com website, let's take a sample of ten sites to manually check
+
+```
+$ cut -f7 -d$'\t' newsCorpora.tsv | head -10 | grep -Eiv ".\.com$"
+HOSTNAME
+```
+
+* Wait what? I just got `HOSTNAME`...**OOPS! I made a mistake**, can you figure it out?
+* I only passed the ten line `head` of the `cut` to `grep`, not the entire data, let's do that over in the right order
+
+```
+$ cut -f7 -d$'\t' newsCorpora.tsv | grep -Eiv ".\.com$" | head -10
+```
+
+* There we go! I see a lot of websites from other countries, let's just make the decision to just include Canadian websites too (".ca") and make a new file called `newsCorpora3.tsv`
+
+```
+$ grep -Eic ".\.com$|.\.ca$" newsCorpora2.tsv
+354454
+$ grep -Ei ".\.com$|.\.ca$" newsCorpora2.tsv > newsCorpora3.tsv
+```
+
+* Let's see what articles are published by the Los Angeles Times about the stock market, we'll just look at the top 50
+
+```
+$ grep -Ein "Los Angeles Times" newsCorpora2.tsv | grep -Ei "stock" | head -50 | column -t -s $'\t'
+```
+
+* Interesting, not even 50 articles from LA Times during this database's time period, oh well
 * Done for now, let's clear out all the files:
 
 ```
@@ -514,12 +576,26 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 
 --------------------------------------------------------------------------------------------------
 
-## 9. Next Steps
+## 9. Experiment
 
-**Regex can get very complex to match specific patterns, but it is a powerful tool worth learning**
+* Regex is one of those skills that you need every once in a while, but if you've done a lot at one point, it's easy to pick back up
+* I would suggest you try this tutorial a few times over to get used to the flow and also experiment with new ways of slicing and dicing the data you might see online
+* Just remember to be careful with some commands like `rm`!
 
-* We've seen that John was a bit lax with his naming conventions while Jane was a bit more tidy and consistent. In the real world you may have to deal with data that is not so tidy
-* When you have the opportunity to start recording your own data, it might be best practice to start off with an organized and consistent format
+[Back to Top](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------
+
+## 10. Next Steps
+
+**I'll leave you with a few review topics before suggesting your next step in data analysis with regex**
+
+1. Regex can get very complex to match specific patterns, but you can break down any pattern into its components to make sense of it; it is a powerful tool worth learning
+2. We've seen that John was a bit lax with his music naming conventions while Jane was a bit more tidy and consistent: In the real world you may have to deal with data that is not so tidy
+3. When you have the opportunity to start recording your own data, it's to your benefit and best practice to start off with an organized and consistent format (naming conventions, date format, etc.)
+4. Remember all the fine tuning we had to do in earlier data to get the right results? Not being able to readily see everything with larger data sets might cause us to miss a few things (false positives and false negatives), but sometimes it's the best we can do; nothing will be perfect
+
+**I'm working on a tutorial on `sed` (stream editor) that is another powerful program often used in conjunction with `grep` to replace text after specific patterns were found; stay tuned!**
 
 [Back to Top](#table-of-contents)
 
@@ -543,7 +619,7 @@ Issue | Solution
 --- | ---
 `$: command not found` | Don't type the `$` at the beginning of the example commands, that's there for line reference
 There's no match result to my `grep` | Use `egrep` to see if you forgot to use an [escape character](https://en.wikipedia.org/wiki/Escape_character#Bourne_shell) somewhere
-Don't have `unzip` | Install with `$ sudo apt-get install unzip` which requires `sudo` (administrator) permission
+`unzip: command not found` | Install with `$ sudo apt-get install unzip` which requires `sudo` (administrator) permission
 
 [Back to Top](#table-of-contents)
 
