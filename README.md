@@ -83,7 +83,7 @@
 * Basically, regular expressions are special notation that describes a pattern
 * This notation can be:
    * As simple as "." (regex wildcard), in which you can use ".\\.pdf" to search for all PDF filenames on your computer
-   * Or a bit more complex like "[A-z0-9]+@[A-z0-9]+\\.[A-z]+" to search for all valid email addresss in a huge mailing list
+   * Or a bit more complex like "[A-z0-9]+@[A-z0-9]+\\.[A-z]+" to search for all valid email addresses in a huge mailing list
 
 [Back to Top](#table-of-contents)
 
@@ -162,7 +162,7 @@ atet@LAPTOP:~/folder$ ls
 jane.txt
 ```
 
-* This is a short file, so we can take a peek at **all** the text contents using the program `cat` (don't use `cat` on big files, use `head` or `tail`)
+* This is a short file, so we can peek at **all** the text contents using the program `cat` (don't use `cat` on big files, use `head` or `tail`)
 
 ```
 atet@LAPTOP:~/folder$ cat jane.txt
@@ -212,7 +212,7 @@ $ ls
 jane.txt  john.txt
 ```
 
-* We can take a look at the text content of all the files in the current directory using `cat` and the wildcard `*` (this means **ALL** files)
+* We can look at the text content of all the files in the current directory using `cat` and the wildcard `*` (this means **ALL** files)
 
 ```
 $ cat *
@@ -244,7 +244,7 @@ $ grep -n "mp3" john.txt
 4:mozart_requiem.mp3
 ```
 
-* It looks like line number 4 has the one file were were looking for (`-n` flag will output line number, try without it)
+* It looks like line number 4 has the one file we were looking for (`-n` flag will output line number, try without it)
 
 * We need to find songs in John's library that are NOT `*.m4a` audio (`-v` flag, you can stack different flags together):
 
@@ -277,7 +277,7 @@ $ grep -ni "party" john.txt && grep -ci "party" john.txt
 
 * Three party songs! Now let's include Jane's library in this search
 * Currently, your working directory only has the `john.txt` and `jane.txt` file, so if we use the wildcard `*` instead of a file name, all files in the current directory will be searched together
-* Additionally we just want to output which file (not all the file contents) contains songs by Beethoven (`-l"`)
+* Additionally, we just want to output which file (not all the file contents) contains songs by Beethoven (`-l"`)
 
 ```
 $ grep -li "beethoven" *
@@ -375,7 +375,7 @@ john.txt:4:mozart_requiem.mp3
 
 * Oh no, looks like some file extensions with numbers were picked up here too
 * Let's make this more specific by adding the regex wildcard `.` and one or more `+`
-* This means that the numbers we are looking for can't be at the end of the filename (i.e. file extension) since there has to be some characters after
+* This means that the numbers we are looking for can't be at the end of the filename (i.e. file extension) since there must be some characters after
 
 ```
 $ grep -Ei "mozart|beethoven" * | grep -E "[0-9]+.+"
@@ -426,7 +426,7 @@ $ rm john.txt && rm jane.txt && rm results.txt
 $ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.csv && wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.csv
 ```
 
-* Let's take a look at the new data using `head -3` (show only the first three lines of each file):
+* Let's look at the new data using `head -3` (show only the first three lines of each file):
 
 ```
 $ head -3 *
@@ -442,7 +442,7 @@ John,MOZART PIANO SONATA 11.M4A,Classical,14:31,2007-03-07
 ```
 
 * Looks like it's comma separated values (CSV), like something you'd see in a spreadsheet program like Excel
-* Unfortunately it's not very readable above, let's use the `column` command to make it a bit prettier (with some flags):
+* Unfortunately, it's not very readable above, let's use the `column` command to make it a bit prettier (with some flags):
 
 ```
 $ head -3 * | column -t -s,
@@ -489,7 +489,7 @@ $ rm john.csv && rm jane.csv
 $ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/newsCorpora.zip
 ```
 
-* This file is pretty big and has been compressed, let's extract the file:
+* This is a large file and has been compressed, let's extract the file:
 
 ```
 $ unzip newsCorpora.zip
@@ -515,7 +515,7 @@ ID  TITLE                                                                 URL   
 ```
 
 * Ah, the top line is counted by `wc` but is the header row and isn't an actual record of data
-* This file looks pretty dense, and there's 423,811 more records!
+* This file looks dense, and there's 423,811 more records!
 * Let's cut down this data to only the `TITLE` (column 2),  `PUBLISHER` (column 4), and `HOSTNAME` (column 7) and check that the output is correct
 
 ```
@@ -544,8 +544,8 @@ $ cut -f7 -d$'\t' newsCorpora.tsv | head -10 | grep -Eiv ".\.com$"
 HOSTNAME
 ```
 
-* Wait what? I just got `HOSTNAME`...**OOPS! I made a mistake**, can you figure it out?
-* I only passed the ten line `head` of the `cut` to `grep`, not the entire data, let's do that over in the right order
+* Wait what? I just got `HOSTNAME`...**OOPS! I made a mistake**; can you figure it out?
+* I only passed the ten-line `head` of the `cut` to `grep`, not the entire data, let's do that over in the right order
 
 ```
 $ cut -f7 -d$'\t' newsCorpora.tsv | grep -Eiv ".\.com$" | head -10
@@ -578,8 +578,8 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 
 ## 9. Experiment
 
-* Regex is one of those skills that you need every once in a while, but if you've done a lot at one point, it's easy to pick back up
-* I would suggest you try this tutorial a few times over to get used to the flow and also experiment with new ways of slicing and dicing the data you might see online
+* Regex is one of those skills that you need occasionally, but if you've done a lot at one point, it's easy to pick back up
+* I would suggest you try this tutorial a few times over to get used to the flow and experiment with new ways of slicing and dicing the data you might see online
 * Just remember to be careful with some commands like `rm`!
 
 [Back to Top](#table-of-contents)
@@ -591,7 +591,7 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 **I'll leave you with a few review topics before suggesting your next step in data analysis with regex**
 
 1. Regex can get very complex to match specific patterns, but you can break down any pattern into its components to make sense of it; it is a powerful tool worth learning
-2. We've seen that John was a bit lax with his music naming conventions while Jane was a bit more tidy and consistent: In the real world you may have to deal with data that is not so tidy
+2. We've seen that John was a bit lax with his music naming conventions while Jane was tidier and more consistent: In the real world you may have to deal with data that is not so tidy
 3. When you have the opportunity to start recording your own data, it's to your benefit and best practice to start off with an organized and consistent format (naming conventions, date format, etc.)
 4. Remember all the fine tuning we had to do in earlier data to get the right results? Not being able to readily see everything with larger data sets might cause us to miss a few things (false positives and false negatives), but sometimes it's the best we can do; nothing will be perfect
 
