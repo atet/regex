@@ -1,6 +1,6 @@
 # [atet](https://github.com/atet) / [learn](https://github.com/atet/learn) / [**_regex_**](https://github.com/atet/learn/tree/master/regex)
 
-[![.img/logo_sharex.png](.img/logo_regex.png)](#nolink)
+[![.img/logo_regex.png](.img/logo_regex.png)](#nolink)
 
 # Introduction to Regular Expressions
 
