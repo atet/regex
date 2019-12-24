@@ -232,7 +232,8 @@ $ cd regex
 * Download these two example files from my GitHub using `wget` and chaining the two commands into one line using `&&`
 
 ```
-$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.txt && wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.txt
+$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.txt && \
+  wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.txt
 
 <A BUNCH OF WGET STATUS TEXT>
 
@@ -452,7 +453,8 @@ $ rm john.txt && rm jane.txt && rm results.txt
 * Looks like John and Jane updated their library data with additional information, let's download it:
 
 ```
-$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.csv && wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.csv
+$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.csv && \
+  wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.csv
 ```
 
 * Let's look at the new data using `head -3` (show only the first three lines of each file):
@@ -556,13 +558,15 @@ ID  TITLE                                                                 URL   
 * Let's cut down this data to only the `TITLE` (column 2),  `PUBLISHER` (column 4), and `HOSTNAME` (column 7) and check that the output is correct
 
 ```
-$ cut -f2,4,7  -d$'\t' newsCorpora.tsv | head -5 | column -t -s $'\t'
+$ cut -f2,4,7  -d$'\t' newsCorpora.tsv | \
+  head -5 | column -t -s $'\t'
 ```
 
 * Looks good so far, let's move these results into a new file called `newsCorpora2.tsv` and double check the contents
 
 ```
-$ cut -f2,4,7  -d$'\t' newsCorpora.tsv > newsCorpora2.tsv && head -5 newsCorpora2.tsv | column -t -s $'\t'
+$ cut -f2,4,7  -d$'\t' newsCorpora.tsv > newsCorpora2.tsv && \
+  head -5 newsCorpora2.tsv | column -t -s $'\t'
 ```
 
 * I'm curious to see how many articles are from ".com" websites, since I tend to associate that with more legitimate websites
@@ -577,7 +581,8 @@ $ grep -Eic ".\.com$" newsCorpora2.tsv
 * Now I'm really curious what news outlets don't have a .com website, let's take a sample of ten sites to manually check
 
 ```
-$ cut -f7 -d$'\t' newsCorpora.tsv | head -10 | grep -Eiv ".\.com$"
+$ cut -f7 -d$'\t' newsCorpora.tsv | \
+  head -10 | grep -Eiv ".\.com$"
 HOSTNAME
 ```
 
@@ -585,7 +590,8 @@ HOSTNAME
 * I only passed the ten-line `head` of the `cut` to `grep`, not the entire data, let's do that over in the right order
 
 ```
-$ cut -f7 -d$'\t' newsCorpora.tsv | grep -Eiv ".\.com$" | head -10
+$ cut -f7 -d$'\t' newsCorpora.tsv | \
+  grep -Eiv ".\.com$" | head -10
 ```
 
 * There we go! I see a lot of websites from other countries, let's just make the decision to just include Canadian websites too (".ca") and make a new file called `newsCorpora3.tsv`
@@ -599,7 +605,8 @@ $ grep -Ei ".\.com$|.\.ca$" newsCorpora2.tsv > newsCorpora3.tsv
 * Let's see what articles are published by the Los Angeles Times about the stock market, we'll just look at the top 50
 
 ```
-$ grep -Ein "Los Angeles Times" newsCorpora2.tsv | grep -Ei "stock" | head -50 | column -t -s $'\t'
+$ grep -Ein "Los Angeles Times" newsCorpora2.tsv | \
+  grep -Ei "stock" | head -50 | column -t -s $'\t'
 ```
 
 * Interesting, not even 50 articles from LA Times during this database's time period, oh well
@@ -642,7 +649,7 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 
 Description | Link
 --- | ---
-`grep` manual | https://www.gnu.org/software/grep/manual/grep.html
+`grep` Manual | https://www.gnu.org/software/grep/manual/grep.html
 Basic vs. Extended `grep` | https://www.gnu.org/software/grep/manual/html_node/Basic-vs-Extended.html
 Bash Reference Manual | https://www.gnu.org/software/bash/manual/bash.pdf
 Regex Cheat Sheet | https://staff.washington.edu/weller/grep.html
