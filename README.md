@@ -645,6 +645,7 @@ Description | Link
 `grep` manual | https://www.gnu.org/software/grep/manual/grep.html
 Basic vs. Extended `grep` | https://www.gnu.org/software/grep/manual/html_node/Basic-vs-Extended.html
 Bash Reference Manual | https://www.gnu.org/software/bash/manual/bash.pdf
+Regex Cheat Sheet | https://staff.washington.edu/weller/grep.html
 
 [Back to Top](#table-of-contents)
 
