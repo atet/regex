@@ -82,14 +82,38 @@
 
 * Basically, regular expressions are special notation that describes a pattern
 * This notation can be:
-   * As simple as "." (regex wildcard), in which you can use ".\\.pdf" to search for all PDF filenames on your computer
-   * Or a bit more complex like "[A-z0-9]+@[A-z0-9]+\\.[A-z]+" to search for all valid email addresses in a huge mailing list
+   * As simple as "`.`" (regex wildcard), in which you can use "`.\.pdf`" to search for all PDF filenames on your computer
+   * Or a bit more complex like "`[A-z0-9]+@[A-z0-9]+\.[A-z]+`" to search for all valid email addresses in a huge mailing list
 
 [Back to Top](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------
 
 ## 3. Basic Use
+
+### File Structure
+
+* If you're accustomed to using a graphical user interface (GUI) file explorer, just continue to think of your files and folders (a.k.a. "directories") in a tree-like structure
+
+[![.img/step03a.png](.img/step03a.png)](#nolink)
+
+* Now let's just think of the files by file name only
+
+```
+          |- folder2   |- file2
+folder1 --|- folder3 --|
+          |- file1     |- file3
+```
+
+* Let's represent each `file1-3` by their file path starting from the left to the right
+* The first "`/`" denotes the "root" of the file structure
+
+```
+/folder1/file1
+/folder1/folder3/file2
+/folder1/folder3/file3
+```
+
 
 ### Welcome to CLI
 
@@ -99,13 +123,17 @@
 ```
 atet:LAPTOP:~$ _
 ```
-* For the sake of this tutorial, type out any commands you see after the `$` in the examples below
+
+* **IMPORTANT: For the sake of this tutorial, type out any commands you see after the `$` in the examples below**
+
+```
+atet:LAPTOP:~$ echo hello
+hello
+```
+
+* The results will also be shown for reference
 
 ### Navigation
-
-* If you're accustomed to using a graphical user interface (GUI) file explorer, just continue to think of your files and folders (a.k.a. "directories") in a tree-like structure
-
-[![.img/step03a.png](.img/step03a.png)](#nolink)
 
 * If you execute the command `pwd` ("print working directory"), you'll see where you are currently in your file system
 
@@ -362,7 +390,7 @@ john.txt:4:mozart_requiem.mp3
 ```
 
 * Let's see which of these classical songs have numbers in the title
-* `[0-9]` means to look for numerals 0 through 9 and the `+` after means one or more of the thing before
+* `[0-9]` means to look for numerals 0 through 9 and the `+` "quantifier" after means one or more of the thing before
 * Let's also combine this with the Bash pipe operator `|` (remember, different "meaning" than regex "or")
 
 ```
@@ -374,7 +402,7 @@ john.txt:4:mozart_requiem.mp3
 ```
 
 * Oh no, looks like some file extensions with numbers were picked up here too
-* Let's make this more specific by adding the regex wildcard `.` and one or more `+`
+* Let's make this more specific by adding the regex wildcard `.` and quantifier `+`
 * This means that the numbers we are looking for can't be at the end of the filename (i.e. file extension) since there must be some characters after
 
 ```
@@ -435,7 +463,6 @@ $ head -3 *
 owner,filename,genre,length,date modified
 Jane,Andrew_WK_-_Party_Hard.mp4,Hard Rock,3:26,2016-10-24
 Jane,Beethoven_-_Fur_Elise.m4a,Classical,2:56,2007-01-04
-
 ==> john.csv <==
 owner,filename,genre,length,date modified
 John,Party All the Time - Eddie Murphy.m4a,Funk,4:08,2008-11-20
@@ -538,8 +565,8 @@ $ cut -f2,4,7  -d$'\t' newsCorpora.tsv | head -5 | column -t -s $'\t'
 $ cut -f2,4,7  -d$'\t' newsCorpora.tsv > newsCorpora2.tsv && head -5 newsCorpora2.tsv | column -t -s $'\t'
 ```
 
-* Curious, how many articles are from ".com" websites since I tend to associate that with more legitimate websites
-* Let's use the regex `$` symbol to denote that the term `.\.com` needs to occur right at the end of the line
+* I'm curious to see how many articles are from ".com" websites, since I tend to associate that with more legitimate websites
+* Let's use the regex "anchor" `$` symbol to denote that the term `.\.com` needs to occur right at the end of the line
 
 ```
 $ grep -Eic ".\.com$" newsCorpora2.tsv
@@ -588,7 +615,7 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 
 ## 9. Experiment
 
-* Regex is one of those skills that you need occasionally, but if you've done a lot at one point, it's easy to pick back up
+* Regex is one of those skills that you need occasionally, but if you've done a lot at one point, it's easier to pick back up when you need it
 * I would suggest you try this tutorial a few times over to get used to the flow and experiment with new ways of slicing and dicing the data you might see online
 * Just remember to be careful with some commands like `rm`!
 
@@ -630,6 +657,16 @@ Issue | Solution
 `$: command not found` | Don't type the `$` at the beginning of the example commands, that's there for line reference
 There's no match result to my `grep` | Use `egrep` to see if you forgot to use an [escape character](https://en.wikipedia.org/wiki/Escape_character#Bourne_shell) or maybe you have a unintended space somewhere?
 `unzip: command not found` | Install with `$ sudo apt-get install unzip` which requires `sudo` (administrator) permission
+
+* Q: Why do the symbols have different meaning sometimes?
+* A: The syntax in Bash and regex share some symbols, but have different meaning:
+
+Symbol | Bash | Regex
+--- | --- | ---
+`*` (asterisk) | Wildcard | "Zero or more" quantifier
+`.` (period) | Current directory | Wildcard
+`|` (pipe/bar) | Pipe operator | "Or" logical operator
+`$` | Multiple functionality</br>depending on context | "End of line" anchor
 
 [Back to Top](#table-of-contents)
 
