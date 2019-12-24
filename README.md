@@ -302,7 +302,7 @@ john.txt
 * Looks like they both like to party, let's see all the party songs between the two of them:
 
 ```
-* grep -ni "party" *
+$ grep -ni "party" *
 jane.txt:1:Andrew_WK_-_Party_Hard.mp4
 jane.txt:4:Eddie_Murphy_-_Party_All_the_Time.mp3
 jane.txt:5:LMFAO_-_Party_Rock_Anthem.mp4
@@ -384,7 +384,8 @@ jane.txt:Beethoven_-_Symphony_No_6.mp3
 john.txt:MOZART PIANO SONATA 11.M4A
 ```
 
-* Almost, looks like "mp3" was removed, but not "m4a", let's be more specific to say that you need a space before the number
+* Almost, looks like "mp3" was removed, but not "m4a", **let's be more specific to say that you need a space before the number**
+   * NOTE: Spaces in the regex command are considered as literal spaces to be looked for in a pattern
 
 ```
 $ grep -Ei "mozart|beethoven" * | grep -E " [0-9]+.+"
@@ -457,18 +458,27 @@ John              MOZART PIANO SONATA 11.M4A             Classical  14:31   2007
 ```
 
 * There's a lot more information here, but we only care about `owner`, `filename` and `genre`; let's cut those out to show by using the program `cut`
-* We are going to use the flag `-d ","` to denote we are splitting the columns by a comma and `-f1,2,3` to only get columns 1-4 (and not column 5)
+* We are going to use the flag `-d ","` to denote we are splitting the columns by a comma and `-f1,2,3` to only get columns 1-3 (and not columns 4 and 5)
 
 ```
-$ cut -d "," -f1,2,3 * | column -t -s,
+$ head -3 * | cut -d "," -f1,2,3 | column -t -s,
+==> jane.csv <==
+owner             filename                               genre
+Jane              Andrew_WK_-_Party_Hard.mp4             Hard Rock
+Jane              Beethoven_-_Fur_Elise.m4a              Classical
+==> john.csv <==
+owner             filename                               genre
+John              Party All the Time - Eddie Murphy.m4a  Funk
+John              MOZART PIANO SONATA 11.M4A             Classical
 ```
 
 * John's having a party and we really want to play a pop music video (MP4 file) in the background, let's see what we have:
 
 ```
 $ cut -d "," -f1,2,3 * | column -t -s, | grep "Pop" | grep -iE ".+\.mp4"
+Jane   Miley_Cyrus_-_Party_In_The_USA.mp4         Pop
 ```
-* Looks like Jane has a classic jam for John to borrow
+* Looks like Jane has a classic jam for John to play
 * Cool, now let's clear out all the files to work on different data in the next section:
 
 ```
@@ -590,12 +600,12 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 
 **I'll leave you with a few review topics before suggesting your next step in data analysis with regex**
 
-1. Regex can get very complex to match specific patterns, but you can break down any pattern into its components to make sense of it; it is a powerful tool worth learning
-2. We've seen that John was a bit lax with his music naming conventions while Jane was tidier and more consistent: In the real world you may have to deal with data that is not so tidy
-3. When you have the opportunity to start recording your own data, it's to your benefit and best practice to start off with an organized and consistent format (naming conventions, date format, etc.)
-4. Remember all the fine tuning we had to do in earlier data to get the right results? Not being able to readily see everything with larger data sets might cause us to miss a few things (false positives and false negatives), but sometimes it's the best we can do; nothing will be perfect
+1. Regex can get very complex to match specific patterns, but you can break down any pattern into its components to make sense of it
+2. We've seen that John was a bit lax with his naming conventions while Jane was tidier and more consistent: In the real world, be prepared to deal with more messy data than "perfect" data
+3. When you have the opportunity to start recording your own data, use best practices to start off with organized and consistent formatting (naming conventions, date format, etc.)
+4. _Remember all the fine tuning we had to do to get the right results?_ In big data, not being able to readily see everything with might cause us to miss a few things (false positives and false negatives), but sometimes **it's the best we can do; nothing will be perfect**
 
-**I'm working on a tutorial on `sed` (stream editor) that is another powerful program often used in conjunction with `grep` to replace text after specific patterns were found; stay tuned!**
+**I'm working on a tutorial on `sed` (stream editor), another powerful program often used in conjunction with `grep` to replace text after specific patterns are found; stay tuned!**
 
 [Back to Top](#table-of-contents)
 
@@ -618,7 +628,7 @@ Bash Reference Manual | https://www.gnu.org/software/bash/manual/bash.pdf
 Issue | Solution
 --- | ---
 `$: command not found` | Don't type the `$` at the beginning of the example commands, that's there for line reference
-There's no match result to my `grep` | Use `egrep` to see if you forgot to use an [escape character](https://en.wikipedia.org/wiki/Escape_character#Bourne_shell) somewhere
+There's no match result to my `grep` | Use `egrep` to see if you forgot to use an [escape character](https://en.wikipedia.org/wiki/Escape_character#Bourne_shell) or maybe you have a unintended space somewhere?
 `unzip: command not found` | Install with `$ sudo apt-get install unzip` which requires `sudo` (administrator) permission
 
 [Back to Top](#table-of-contents)
