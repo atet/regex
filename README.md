@@ -673,7 +673,7 @@ Symbol | Bash | Regex
 --- | --- | ---
 `*` (asterisk) | Wildcard | "Zero or more" quantifier
 `.` (period) | Current directory | Wildcard
-`|` (pipe/bar) | Pipe operator | "Or" logical operator
+\`|` (pipe/bar) | Pipe operator | "Or" logical operator
 `$` | Multiple functionality</br>depending on context | "End of line" anchor
 
 [Back to Top](#table-of-contents)
