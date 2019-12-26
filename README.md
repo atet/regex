@@ -4,6 +4,8 @@
 
 # Introduction to Regular Expressions
 
+**This is part of a two-tutorial series on capturing and transcoding videos: When you're done here, please see [10. Next Steps](#10-next-steps) to finish this series**
+
 * Estimated time to completion: 15 minutes.
 * This quick introduction to regular expressions (regex) is meant to cover only the absolute necessary material to get you up and running in a minimal amount of time.
 * You are here because **you want to learn a few simple tricks to quickly process large amounts of text data**.
@@ -639,7 +641,7 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 3. When you have the opportunity to start recording your own data, use best practices to start off with organized and consistent formatting (naming conventions, date format, etc.)
 4. _Remember all the fine tuning we had to do to get the right results?_ In big data, not being able to readily see everything with might cause us to miss a few things (false positives and false negatives), but sometimes **it's the best we can do; nothing will be perfect**
 
-**I'm working on a tutorial on `sed` (stream editor), another powerful program often used in conjunction with `grep` to replace text after specific patterns are found; stay tuned!**
+**I highly recommend learning how to use the powerful `sed` (stream editor) program, used in conjunction with `grep` to replace text after specific patterns are found: [Atet's 15 Minute Introduction to Stream Editor](https://github.com/atet/learn/blob/master/sed/README.md#atet--learn--sed)**
 
 [Back to Top](#table-of-contents)
 
