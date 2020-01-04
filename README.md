@@ -4,12 +4,11 @@
 
 # Introduction to Regular Expressions
 
-**This is part of a two-tutorial series on capturing and transcoding videos: When you're done here, please see [10. Next Steps](#10-next-steps) to finish this series**
+**Estimated time to completion: 15 minutes**
 
-* Estimated time to completion: 15 minutes.
-* This quick introduction to regular expressions (regex) is meant to cover only the absolute necessary material to get you up and running in a minimal amount of time.
-* You are here because **you want to learn a few simple tricks to quickly process large amounts of text data**.
-* We will be using <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash Command Line Interface (CLI)</a> to perform basic operations; advanced material is not covered here.
+* This introduction to regular expressions (regex) covers what's absolutely necessary to get you up and running
+* You are here because **you want to learn some simple tricks to quickly process huge amounts of data**
+* We will be using Bash command line interface (CLI) to perform basic operations; advanced material is not covered here
 
 --------------------------------------------------------------------------------------------------
 
