@@ -1,4 +1,4 @@
-# [atet](https://github.com/atet) / [learn](https://github.com/atet/learn) / [**_regex_**](https://github.com/atet/learn/tree/master/regex)
+# [atet](https://github.com/atet) / [learn](https://github.com/atet/learn/blob/master/README.md#atet--learn) / [**_regex_**](https://github.com/atet/learn/blob/master/regex/README.md#atet--learn--regex)
 
 [![.img/logo_regex.png](.img/logo_regex.png)](#nolink)
 
