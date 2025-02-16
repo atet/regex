@@ -1,4 +1,4 @@
-# [atet](https://github.com/atet) / [learn](https://github.com/atet/learn/blob/master/README.md#atet--learn) / [**_regex_**](https://github.com/atet/learn/blob/master/regex/README.md#atet--learn--regex)
+# [atet](https://github.com/atet) / [**_regex_**](https://github.com/atet/regex/README.md#atet--regex)
 
 [![.img/logo_regex.png](.img/logo_regex.png)](#nolink)
 
@@ -38,9 +38,9 @@
 
 ## 0. Requirements
 
-* This tutorial was developed on Microsoft Windows 10 with Windows Subsystem for Linux (WSL) using Ubuntu 18.04 LTS
-* If you are using MacOS, [your Terminal program is Bash](https://en.wikipedia.org/wiki/Terminal_(macOS))
-* Most Linux distributions use or can use Bash
+* **Windows**: This tutorial was developed on Microsoft Windows 10 with Windows Subsystem for Linux (WSL) using Ubuntu
+* **Mac**: If you are using MacOS, [your Terminal program is Bash](https://en.wikipedia.org/wiki/Terminal_(macOS))
+* **Linux**: Most Linux distributions use or can use Bash
 
 [Back to Top](#table-of-contents)
 
@@ -53,6 +53,7 @@ We will use a Linux a command line interface (CLI) available on all major operat
 ### Windows 10
 
 * Windows Subsystem for Linux (WSL) is a fully supported Microsoft product for Windows 10, learn how to install it here: https://github.com/atet/wsl
+* I recommend using Ubuntu 20.04 LTS or later from the Microsoft Store
 
 ### MacOS
 
@@ -60,7 +61,7 @@ We will use a Linux a command line interface (CLI) available on all major operat
 
 ### Linux
 
-* I recommend using Ubuntu 20.04 LTS
+* I recommend using Ubuntu 20.04 LTS or later
 
 [Back to Top](#table-of-contents)
 
@@ -71,13 +72,13 @@ We will use a Linux a command line interface (CLI) available on all major operat
 ### What is Bash?
 
 * Bash is a command line interface (CLI) that allows you to use your operating system purely by text commands 
-   * This is a huge benefit over clicking buttons in a graphical user interface **especially if you have a ton of repetitive and routine tasks**
+* This is a huge benefit over clicking buttons in a graphical user interface **especially if you have a ton of repetitive and routine tasks**
 * If you're a Windows user like I am, _unlike DOS Command Prompt that is tied to Microsoft_, Windows Subsystem for Linux finally allows some cross-compatibility with Linux and MacOS
 
 ### WARNING: CLI is very powerful
 
-* With great power comes great responsibility; be vigilant of code you run so accidents don't happen
-* If this is your first experience with using a command line interface, don't be intimidated, this is worth learning
+* ***With great power comes great responsibility***; be vigilant of code you run so accidents don't happen, like accidentally erasing files you truly care about
+* If this is your first experience with using a command line interface, don't be intimidated, CLI is absolutely worth learning
 
 ### Regular Expressions
 
@@ -98,15 +99,15 @@ We will use a Linux a command line interface (CLI) available on all major operat
 
 [![.img/step03a.png](.img/step03a.png)](#nolink)
 
-* Now let's just think of the files by file name only
+* Now let's just think of the files folders by name only
 
 ```
-          |- folder2   |- file2
-folder1 --|- folder3 --|
-          |- file1     |- file3
+         ┌─ folder2  ┌─ file2
+folder1 ─┼─ folder3 ─┤
+         └─ file1    └─ file3
 ```
 
-* Let's represent each `file1-3` by their file path starting from the left to the right
+* Let's represent each `file1-3` by their file path starting from the left (i.e., `folder1`) to the right
 * The first "`/`" denotes the "root" of the file structure
 
 ```
@@ -115,11 +116,10 @@ folder1 --|- folder3 --|
 /folder1/folder3/file3
 ```
 
-
 ### Welcome to CLI
 
 * Before we dive into regular expressions, let's go over some basic commands to get around in Bash
-* When you first start your command line interface (CLI), you'll typically be greeted with something similar to this:
+* When you first start your command line interface (CLI), you'll typically be greeted with something similar to this (with your username and computer's name):
 
 ```
 atet:LAPTOP:~$ _
@@ -205,7 +205,7 @@ Rick_Astley_-_Never_Gonna_Give_You_Up.m4a
 ```
 
 * Let's **permanently delete** this file for now with `rm` ("remove")
-   * WARNING: There will be no confirmation to delete files nor is there a concept of "recycling bin" here, be very careful with `rm`
+   * WARNING: There will be no confirmation to delete files nor is there a concept of "recycling bin" here, **be very careful with "`rm`"**
 
 ```
 atet@LAPTOP:~/folder$ ls
@@ -221,7 +221,7 @@ atet@LAPTOP:~/folder$ _
 
 ## 4. Example Files
 
-* **I will now start each line with only `$`, type everything _after_ this**
+* **I will now start each line with only `$`, remember, type everything _after_ this**
 * Let's start at your home directory (a.k.a. `~`) and make a new empty directory to work from
 
 ```
@@ -373,7 +373,7 @@ john.txt:3:eddie - party all the time (remix).mp4
 ### Back to the show
 
 * Let's search for songs by both mozart OR beethoven using an extended `grep` command "`|`"
-   * "`|`" used in `grep` context between the quotations means "or", not pipe as above in Bash context
+   * "`|`" used in `grep` context between the quotations means "or", not "pipe" as above in Bash context
    * You must use the `-E` flag for use of pattern matching commands like "`|`", try without `-E` and it won't work
 
 ```
@@ -523,13 +523,14 @@ $ rm john.csv && rm jane.csv
 
 ## 8. Bigger Data
 
-* We will download a larger dataset of news articles as another example<sup>[[1]](#acknowledgments)</sup>.
+* We will download a larger dataset of news articles as another example (28 MB)<sup>[[1]](#acknowledgments)</sup>.
 
 ```
 $ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/newsCorpora.zip
 ```
 
 * This is a large file and has been compressed, let's extract the file:
+   * If you do not have the `unzip` program in you Bash CLI, install with "`sudo apt-get install unzip`" (requires admin permissions)
 
 ```
 $ unzip newsCorpora.zip
@@ -570,16 +571,16 @@ $ cut -f2,4,7  -d$'\t' newsCorpora.tsv > newsCorpora2.tsv && \
   head -5 newsCorpora2.tsv | column -t -s $'\t'
 ```
 
-* I'm curious to see how many articles are from ".com" websites, since I tend to associate that with more legitimate websites
-* Let's use the regex "anchor" `$` symbol to denote that the term `.\.com` needs to occur right at the end of the line
+* I'm curious to see how many articles are from "`.com`" websites, since I tend to associate that with more legitimate websites
+* Let's use the regex "anchor" `$` symbol to denote that the term `.\.com` needs to occur only at the end of the line
 
 ```
 $ grep -Eic ".\.com$" newsCorpora2.tsv
 348971
 ```
 
-* Oh wow, so almost 75K articles not from a .com website, good to know!
-* Now I'm really curious what news outlets don't have a .com website, let's take a sample of ten sites to manually check
+* Oh wow, so almost 75K articles not from a "`.com`" website, good to know!
+* Now I'm really curious what news outlets don't have a "`.com`" website, let's take a sample of ten sites to manually check
 
 ```
 $ cut -f7 -d$'\t' newsCorpora.tsv | \
@@ -587,7 +588,7 @@ $ cut -f7 -d$'\t' newsCorpora.tsv | \
 HOSTNAME
 ```
 
-* Wait what? I just got `HOSTNAME`...**OOPS! I made a mistake**; can you figure it out?
+* Wait what? Only the word "`HOSTNAME`" was returned...**OOPS! I made a mistake**; can you figure it out?
 * I only passed the ten-line `head` of the `cut` to `grep`, not the entire data, let's do that over in the right order
 
 ```
@@ -595,7 +596,8 @@ $ cut -f7 -d$'\t' newsCorpora.tsv | \
   grep -Eiv ".\.com$" | head -10
 ```
 
-* There we go! I see a lot of websites from other countries, let's just make the decision to just include Canadian websites too (".ca") and make a new file called `newsCorpora3.tsv`
+* There we go! I see a lot of websites from other countries, let's just make the decision to just include Canadian websites too ("`.ca`") and make a new file called `newsCorpora3.tsv`
+   * Note that "`>`" operator is moving the output data into a brand new file
 
 ```
 $ grep -Eic ".\.com$|.\.ca$" newsCorpora2.tsv
@@ -623,9 +625,9 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 
 ## 9. Experiment
 
-* Regex is one of those skills that you need occasionally, but if you've done a lot at one point, it's easier to pick back up when you need it
-* I would suggest you try this tutorial a few times over to get used to the flow and experiment with new ways of slicing and dicing the data you might see online
-* Just remember to be careful with some commands like `rm`!
+* Regex is one of those skills that you need occasionally, but if you've done a lot at one point, it's easier to pick back up when you need it again
+* I would suggest you try this tutorial a few times over to get used to the flow of CLI and experiment with new ways of slicing and dicing the large amounts of data you might see online
+* Just remember to be careful with some commands like "`rm`"!
 
 [Back to Top](#table-of-contents)
 
@@ -636,9 +638,9 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 **I'll leave you with a few review topics before suggesting your next step in data analysis with regex**
 
 1. Regex can get very complex to match specific patterns, but you can break down any pattern into its components to make sense of it
-2. We've seen that John was a bit lax with his naming conventions while Jane was tidier and more consistent: In the real world, be prepared to deal with more messy data than "perfect" data
-3. When you have the opportunity to start recording your own data, use best practices to start off with organized and consistent formatting (naming conventions, date format, etc.)
-4. _Remember all the fine tuning we had to do to get the right results?_ In big data, not being able to readily see everything with might cause us to miss a few things (false positives and false negatives), but sometimes **it's the best we can do; nothing will be perfect**
+2. We've seen that John was a bit lax with his naming conventions while Jane was tidier and more consistent: In the real world, be prepared to deal with a lot more messy data than cleaner, "perfect" data
+3. When you have the opportunity to start collecting your own data, use best practices to start off with organized and consistent formatting (naming conventions, date format, etc.)
+4. _Remember all the fine tuning we had to do to get the right results?_ In big data, not being able to readily see everything might cause us to miss a few things (misspellings, invalid dates, etc.), but sometimes **it's the best we can do; nothing will be perfect**
 
 **I highly recommend learning how to use the powerful `sed` (stream editor) program, used in conjunction with `grep` to replace text after specific patterns are found: [Atet's 15 Minute Introduction to Stream Editor](https://github.com/atet/learn/blob/master/sed/README.md#atet--learn--sed)**
 
@@ -675,7 +677,7 @@ Symbol | Bash | Regex
 `*` (asterisk) | Wildcard | "Zero or more" quantifier
 `.` (period) | Current directory | Wildcard
 `\|` (pipe/bar) | Pipe operator | "Or" logical operator
-`$` | Multiple functionality</br>depending on context | "End of line" anchor
+`$` (dollar sign) | Multiple functionality</br>depending on context | "End of line" anchor
 
 [Back to Top](#table-of-contents)
 
