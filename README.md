@@ -1,4 +1,4 @@
-# [atet](https://github.com/atet) / [**_regex_**](https://github.com/atet/regex/README.md#atet--regex)
+# [atet](https://github.com/atet) / [**_regex_**](https://github.com/atet/regex?tab=readme-ov-file#atet--regex)
 
 [![.img/logo_regex.png](.img/logo_regex.png)](#nolink)
 
