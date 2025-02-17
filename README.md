@@ -155,9 +155,9 @@ book.txt  new  song.mp3
 ```
 atet@LAPTOP:~$ ls -l
 total 0
--rw-rw-rw- 1 mba mba    0 Dec 21 18:39 book.txt
-drwxrwxrwx 1 mba mba 4096 Dec 21 18:42 new
--rw-rw-rw- 1 mba mba    0 Dec 21 18:39 song.mp3
+-rw-rw-rw- 1 atet atet    0 Dec 21 18:39 book.txt
+drwxrwxrwx 1 atet atet 4096 Dec 21 18:42 new
+-rw-rw-rw- 1 atet atet    0 Dec 21 18:39 song.mp3
 ```
 
 * A lot of information, but in this example we see that the file `new` is actually a directory (look all the way to the left and you see the `d`)
@@ -183,7 +183,7 @@ atet@LAPTOP:~/folder$
 * We will download an example files from my GitHub to work on, let's download one now with the program `wget`
 
 ```
-atet@LAPTOP:~/folder$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.txt
+atet@LAPTOP:~/folder$ wget https://raw.githubusercontent.com/atet/regex/main/data/jane.txt
 
 <A BUNCH OF WGET STATUS TEXT>
 
@@ -233,8 +233,8 @@ $ cd regex
 * Download these two example files from my GitHub using `wget` and chaining the two commands into one line using `&&`
 
 ```
-$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.txt && \
-  wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.txt
+$ wget https://raw.githubusercontent.com/atet/regex/main/data/jane.txt && \
+  wget https://raw.githubusercontent.com/atet/regex/main/data/john.txt
 
 <A BUNCH OF WGET STATUS TEXT>
 
@@ -454,8 +454,8 @@ $ rm john.txt && rm jane.txt && rm results.txt
 * Looks like John and Jane updated their library data with additional information, let's download it:
 
 ```
-$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/jane.csv && \
-  wget https://raw.githubusercontent.com/atet/learn/master/regex/data/john.csv
+$ wget https://raw.githubusercontent.com/atet/regex/main/data/jane.csv && \
+  wget https://raw.githubusercontent.com/atet/regex/main/data/john.csv
 ```
 
 * Let's look at the new data using `head -3` (show only the first three lines of each file):
@@ -526,7 +526,7 @@ $ rm john.csv && rm jane.csv
 * We will download a larger dataset of news articles as another example (28 MB)<sup>[[1]](#acknowledgments)</sup>.
 
 ```
-$ wget https://raw.githubusercontent.com/atet/learn/master/regex/data/newsCorpora.zip
+$ wget https://raw.githubusercontent.com/atet/regex/main/data/newsCorpora.zip
 ```
 
 * This is a large file and has been compressed, let's extract the file:
@@ -642,7 +642,7 @@ $ rm newsCorpora.csv && rm newsCorpora.zip
 3. When you have the opportunity to start collecting your own data, use best practices to start off with organized and consistent formatting (naming conventions, date format, etc.)
 4. _Remember all the fine tuning we had to do to get the right results?_ In big data, not being able to readily see everything might cause us to miss a few things (misspellings, invalid dates, etc.), but sometimes **it's the best we can do; nothing will be perfect**
 
-**I highly recommend learning how to use the powerful `sed` (stream editor) program, used in conjunction with `grep` to replace text after specific patterns are found: [Atet's 15 Minute Introduction to Stream Editor](https://github.com/atet/learn/blob/master/sed/README.md#atet--learn--sed)**
+**I highly recommend learning how to use the powerful `sed` (stream editor) program, used in conjunction with `grep` to replace text after specific patterns are found: [Atet's 15 Minute Introduction to Stream Editor](https://github.com/atet/sed?tab=readme-ov-file#atet--sed)**
 
 [Back to Top](#table-of-contents)
 
